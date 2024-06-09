@@ -1,0 +1,53 @@
+server:
+  port: 9002 #端口
+  tomcat:
+    max-threads: 10
+spring:
+  application:
+    name: service-order #服务名称
+#  cloud:
+#    consul:
+#      host: 127.0.0.1 #consul服务器的主机地址
+#      port: 8500 #consul服务器的ip地址
+#      discovery:
+#        #是否需要注册
+#        register: true
+#        #注册的实例ID (唯一标志)
+#        instance-id: ${spring.application.name}-1
+#        #服务的名称
+#        service-name: ${spring.application.name}
+#        #服务的请求端口
+#        port: ${server.port}
+#        #指定开启ip地址注册
+#        prefer-ip-address: true
+#        #当前服务的请求ip
+#        ip-address: ${spring.cloud.client.ip-address}
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true
+
+feign:
+  client:
+    config:
+      service-product:  #需要调用的服务名称
+        loggerLevel: FULL
+
+logging:
+  level:
+    root: info
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
+
+service-product:
+  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+    ConnectTimeout: 250 # Ribbon的连接超时时间
+    ReadTimeout: 1000 # Ribbon的数据读取超时时间
+    OkToRetryOnAllOperations: true # 是否对所有操作都进行重试
+    MaxAutoRetriesNextServer: 1 # 切换实例的重试次数
+    MaxAutoRetries: 1 # 对当前实例的重试次数
