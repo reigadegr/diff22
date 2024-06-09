@@ -50,7 +50,7 @@ public class OrderCommand extends HystrixCommand<Product> {
     @Override
     protected Product getFallback() {
         Product product = new Product();
-        product.setProductName("有错误,请稍后再试!!");
+        product.setProductName("不好意思,出错了");
         return product;
     }
 }
